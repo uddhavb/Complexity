@@ -126,10 +126,12 @@ function complexity(filePath)
 	// Tranverse program with a function visitor.
 	traverseWithParents(ast, function (node) 
 	{
+        //calculate number of literals
 	    if (node.type === "Literal") {
 	            fileBuilder.Strings++;
 	    }
 
+        //calculate the package complexity
 	    if (node.type === "CallExpression")
 	    {
 	        if (node.callee.name === "require")
@@ -144,8 +146,10 @@ function complexity(filePath)
 			var builder = new FunctionBuilder();
 			builder.FunctionName = functionName(node);
 			builder.StartLine = node.loc.start.line;
+            // calculate the parameter count
 			builder.ParameterCount = node.params.length;
 
+            //total number of conditions in the file
 			traverseWithParents(node, function (child) {
 			    if (isDecision(child))
 			    {
@@ -174,11 +178,12 @@ function complexity(filePath)
 			        }
 			    }
 
+			    //cyclometic complexity. SimpleCyclomaticComplexity =1, initially
 			    if (child.type === 'IfStatement') {
 			        builder.SimpleCyclomaticComplexity++;
 
 			    }
-
+                // number of returns per function
 			    if (child.type === "ReturnStatement") {
 			        builder.ReturnCount++;
 			    }
