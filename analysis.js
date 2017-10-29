@@ -8,7 +8,8 @@ function main()
 
 	if( args.length == 0 )
 	{
-		args = ["analysis.js"];
+	    args = ["mystery.js"];
+		//args = ["analysis.js"];
 	}
 	var filePath = args[0];
 	
@@ -126,9 +127,12 @@ function complexity(filePath)
 	// Tranverse program with a function visitor.
 	traverseWithParents(ast, function (node) 
 	{
-        //calculate number of literals
-	    if (node.type === "Literal") {
+	    //calculate number of literals
+	    if (node.type === "Literal")
+	    {
+	        if (typeof node.value === "string") {
 	            fileBuilder.Strings++;
+	        }
 	    }
 
         //calculate the package complexity
