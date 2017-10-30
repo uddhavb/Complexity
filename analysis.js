@@ -157,7 +157,7 @@ function complexity(filePath)
 		    //total number of conditions in the file...
             //Check if it is a decision or not
 			traverseWithParents(node, function (child) {
-			    if (isDecision(child))
+			    if (child.type === 'IfStatement')
 			    {
 			        fileBuilder.AllConditions++;
 			    }
