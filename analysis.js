@@ -53,15 +53,16 @@ function FunctionBuilder()
 		   	"{0}(): {1}\n" +
 		   	"============\n" +
 			   "SimpleCyclomaticComplexity: {2}\t" +
-				"MaxNestingDepth: {3}\t" +
-				"MaxConditions: {4}\t" +
-				"Parameters: {5}\t" +
-                "Return: {6}\t" +
-                "Max Message Chains: {7}\n\n"
+				//"MaxNestingDepth: {3}\t" +
+				//"MaxConditions: {4}\t" +
+				"Parameters: {3}\t" +
+                "Return: {4}\t" +
+                "Max Message Chains: {5}\n\n"
 			)
 			.format(this.FunctionName, this.StartLine,
-				     this.SimpleCyclomaticComplexity, this.MaxNestingDepth,
-			        this.MaxConditions, this.ParameterCount, this.ReturnCount, this.MaxMessageChains)
+				     this.SimpleCyclomaticComplexity,
+                     //this.MaxNestingDepth, this.MaxConditions,
+                     this.ParameterCount, this.ReturnCount, this.MaxMessageChains)
 		);
 	}
 };
@@ -153,16 +154,16 @@ function complexity(filePath)
             // calculate the parameter count
 			builder.ParameterCount = node.params.length;
 
-            //total number of conditions in the file
+		    //total number of conditions in the file...
+            //Check if it is a decision or not
 			traverseWithParents(node, function (child) {
 			    if (isDecision(child))
 			    {
-			        traverseWithParents(child, function (grandChild) {
-			            if (grandChild.type === "LogicalExpression")
-                        {
-			                fileBuilder.AllConditions++;
-			            }
-			        });
+			        fileBuilder.AllConditions++;
+			    }
+            //After checking that check all the logical expressions that may be inside the decision.
+			    if (child.type === "LogicalExpression")
+			    {
 			        fileBuilder.AllConditions++;
 			    }
 
