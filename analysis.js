@@ -146,6 +146,11 @@ function complexity(filePath)
 	        
 	    }
 
+	    // check all the logical expressions that may be inside the decision.
+	    if (node.type === "LogicalExpression") {
+	        fileBuilder.AllConditions++;
+	    }
+
 		if (node.type === 'FunctionDeclaration') 
 		{
 			var builder = new FunctionBuilder();
@@ -155,17 +160,7 @@ function complexity(filePath)
 			builder.ParameterCount = node.params.length;
 
 		    //total number of conditions in the file...
-            //Check if it is a decision or not
 			traverseWithParents(node, function (child) {
-			    if (child.type === 'IfStatement')
-			    {
-			        fileBuilder.AllConditions++;
-			    }
-            //After checking that check all the logical expressions that may be inside the decision.
-			    if (child.type === "LogicalExpression")
-			    {
-			        fileBuilder.AllConditions++;
-			    }
 
 			    // to calculate the message length
 			    if (child.type === "MemberExpression")
