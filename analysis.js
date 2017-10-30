@@ -184,7 +184,7 @@ function complexity(filePath)
 			    }
 
 			    //cyclometic complexity. SimpleCyclomaticComplexity =1, initially
-			    if (child.type === 'IfStatement') {
+			    if (isDecision(child)) {
 			        builder.SimpleCyclomaticComplexity++;
 
 			    }
