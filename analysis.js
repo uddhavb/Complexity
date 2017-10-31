@@ -147,7 +147,7 @@ function complexity(filePath)
 	    }
 
 	    // check all the logical expressions that may be inside the decision.
-	    if (node.type === "LogicalExpression") {
+	    if (node.type === "LogicalExpression" || isDecision(node)) {
 	        fileBuilder.AllConditions++;
 	    }
 
